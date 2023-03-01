@@ -9,6 +9,7 @@ import users_pb2_grpc
 class Users(users_pb2_grpc.UsersServicer):
 
     def GetUser(self, request, context):
+        print("request: ", request)
         return users_pb2.GetUsersResponse(users=[
             users_pb2.User(
                 id="1",
@@ -17,6 +18,17 @@ class Users(users_pb2_grpc.UsersServicer):
                 password="password"
             )
         ])
+
+    def CreateUser(self, request, context):
+        print("request: ", request.user)
+        return users_pb2.CreateUserResponse(
+            user=users_pb2.User(
+                id=request.user.id,
+                name=request.user.name,
+                email=request.user.email,
+                password=request.user.password
+            )
+        )
 
 
 def serve():
